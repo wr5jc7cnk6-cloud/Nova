@@ -2,42 +2,46 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Nova</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiktok2</title>
 
 <style>
 body {
   margin: 0;
-  background: #000;
-  color: #fff;
+  background: black;
+  color: white;
   font-family: sans-serif;
+  text-align: center;
 }
 
-/* 動画エリア（仮） */
-.video {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
+/* 上の告知 */
+.notice {
+  padding: 10px;
+  font-size: 14px;
+  background: #111;
 }
 
-/* 下メニュー */
-.menu {
+/* 動画エリア */
+.video-area {
+  margin-top: 20px;
+}
+
+video {
+  width: 90%;
+  max-height: 70vh;
+  border-radius: 10px;
+}
+
+/* 下ナビ */
+.navbar {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
   background: #111;
   display: flex;
   justify-content: space-around;
-  padding: 12px 0;
-  border-top: 1px solid #222;
-}
-
-.menu button {
-  background: none;
-  border: none;
-  color: white;
+  padding: 10px 0;
   font-size: 14px;
 }
 </style>
@@ -45,16 +49,23 @@ body {
 
 <body>
 
-<div class="video">
-  🎬 動画エリア（ここに本体作っていく）
+<div class="notice">
+この機能 Life 実装予定です
 </div>
 
-<div class="menu">
-  <button>ホーム</button>
-  <button>LIVE</button>
-  <button>投稿</button>
-  <button>通知</button>
-  <button>プロフィール</button>
+<div class="video-area">
+<video controls autoplay loop>
+  <source src="snaptik_7197240045273615618_v3.mp4" type="video/mp4">
+  動画を再生できません
+</video>
+</div>
+
+<div class="navbar">
+<div>ホーム</div>
+<div>LIVE</div>
+<div>投稿</div>
+<div>通知</div>
+<div>プロフィール</div>
 </div>
 
 </body>
