@@ -1,99 +1,116 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>Nova Login</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
+<meta charset="UTF-8">
+<title>Nova</title>
+<style>
+body {
+  margin:0;
+  font-family:sans-serif;
+  background:#0b1220;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
 
-    .box {
-      background: #1e293b;
-      padding: 40px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
+.card {
+  background:#1b2435;
+  padding:30px;
+  border-radius:16px;
+  text-align:center;
+  width:260px;
+}
 
-    button {
-      background: #4285F4;
-      border: none;
-      padding: 12px 20px;
-      font-size: 16px;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 15px;
-    }
+button {
+  background:#4285f4;
+  border:none;
+  color:white;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+  width:100%;
+  font-size:14px;
+}
 
-    button:hover {
-      opacity: 0.9;
-    }
-
-    #user {
-      margin-top: 15px;
-      font-size: 14px;
-      color: #38bdf8;
-    }
-  </style>
+.hidden { display:none; }
+img { border-radius:50%; width:80px; margin-bottom:10px; }
+</style>
 </head>
 
 <body>
 
-<div class="box">
-  <h1>Nova</h1>
+<!-- ログイン画面 -->
+<div id="login" class="card">
+  <h2>Nova</h2>
   <p>ログインしてください</p>
   <button onclick="login()">Googleでログイン</button>
-  <div id="user"></div>
+</div>
+
+<!-- ホーム画面 -->
+<div id="home" class="card hidden">
+  <h2>ホーム</h2>
+  <p id="welcome"></p>
+  <button onclick="openProfile()">プロフィール</button>
+  <br><br>
+  <button onclick="logout()">ログアウト</button>
+</div>
+
+<!-- プロフィール画面 -->
+<div id="profile" class="card hidden">
+  <img id="avatar">
+  <h3 id="name"></h3>
+  <p id="email"></p>
+  <button onclick="goHome()">戻る</button>
 </div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-  import {
-    getAuth,
-    GoogleAuthProvider,
-    signInWithPopup,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDllB-KfT1aAT8nWlcWAKsQCV6o6xpqwzA",
-    authDomain: "nova-a7c84.firebaseapp.com",
-    projectId: "nova-a7c84",
-    storageBucket: "nova-a7c84.firebasestorage.app",
-    messagingSenderId: "801132117991",
-    appId: "1:801132117991:web:f56f4b4497703b65dd0742",
-    measurementId: "G-GCN4KNVBYG"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyDllB-KfT1aAT8nWlcWAKsQCV6o6xpqwzA",
+  authDomain: "nova-a7c84.firebaseapp.com",
+  projectId: "nova-a7c84",
+  storageBucket: "nova-a7c84.firebasestorage.app",
+  messagingSenderId: "801132117991",
+  appId: "1:801132117991:web:f56f4b4497703b65dd0742"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-  window.login = async function () {
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (err) {
-      alert("ログイン失敗: " + err.message);
-    }
-  };
+window.login = () => signInWithPopup(auth, provider);
+window.logout = () => signOut(auth);
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      document.getElementById("user").innerText =
-        "ログイン中: " + user.displayName;
-    } else {
-      document.getElementById("user").innerText = "";
-    }
-  });
+window.openProfile = () => {
+  show("profile");
+};
+
+window.goHome = () => {
+  show("home");
+};
+
+function show(page){
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("profile").classList.add("hidden");
+  document.getElementById(page).classList.remove("hidden");
+}
+
+onAuthStateChanged(auth, user => {
+  if(user){
+    document.getElementById("welcome").innerText = "ようこそ " + user.displayName;
+    document.getElementById("name").innerText = user.displayName;
+    document.getElementById("email").innerText = user.email;
+    document.getElementById("avatar").src = user.photoURL;
+    show("home");
+  } else {
+    show("login");
+  }
+});
 </script>
 
 </body>
