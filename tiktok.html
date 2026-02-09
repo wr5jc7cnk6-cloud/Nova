@@ -1,0 +1,55 @@
+<div id="gate">
+  <div class="gate-box">
+    <h2>コミュニティガイドライン</h2>
+    <p>
+      安全で楽しい動画コミュニティを作るため、
+      ガイドラインに同意してください。
+    </p>
+
+    <ul>
+      <li>他人への嫌がらせ禁止</li>
+      <li>危険行為の投稿禁止</li>
+      <li>個人情報の公開禁止</li>
+      <li>不正なポイント取得禁止</li>
+    </ul>
+
+    <button onclick="accept()">同意して続ける</button>
+  </div>
+</div>
+
+<style>
+#gate {
+  position: fixed;
+  inset: 0;
+  background: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.gate-box {
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px;
+  width: 100%;
+  font-size: 16px;
+}
+</style>
+
+<script>
+function accept() {
+  localStorage.setItem("agreed", "yes");
+  document.getElementById("gate").style.display = "none";
+}
+
+if (localStorage.getItem("agreed") === "yes") {
+  document.getElementById("gate").style.display = "none";
+}
+</script>
