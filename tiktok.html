@@ -1,55 +1,74 @@
-<div id="gate">
-  <div class="gate-box">
-    <h2>コミュニティガイドライン</h2>
-    <p>
-      安全で楽しい動画コミュニティを作るため、
-      ガイドラインに同意してください。
-    </p>
-
-    <ul>
-      <li>他人への嫌がらせ禁止</li>
-      <li>危険行為の投稿禁止</li>
-      <li>個人情報の公開禁止</li>
-      <li>不正なポイント取得禁止</li>
-    </ul>
-
-    <button onclick="accept()">同意して続ける</button>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ガイドライン - Nova</title>
 
 <style>
-#gate {
-  position: fixed;
-  inset: 0;
+body {
+  margin: 0;
   background: black;
   color: white;
+  font-family: sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  height: 100vh;
 }
 
-.gate-box {
+.box {
   width: 90%;
   max-width: 400px;
   text-align: center;
 }
 
+h2 {
+  margin-bottom: 10px;
+}
+
+ul {
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 button {
   margin-top: 20px;
-  padding: 12px;
   width: 100%;
+  padding: 14px;
   font-size: 16px;
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 8px;
 }
 </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>コミュニティガイドライン</h2>
+
+  <p>安全に楽しむため、以下に同意してください。</p>
+
+  <ul>
+    <li>嫌がらせ・いじめ禁止</li>
+    <li>危険行為の投稿禁止</li>
+    <li>個人情報の公開禁止</li>
+    <li>不正なポイント取得禁止</li>
+  </ul>
+
+  <button onclick="accept()">同意して続ける</button>
+</div>
 
 <script>
 function accept() {
   localStorage.setItem("agreed", "yes");
-  document.getElementById("gate").style.display = "none";
-}
-
-if (localStorage.getItem("agreed") === "yes") {
-  document.getElementById("gate").style.display = "none";
+  window.location.href = "index.html";
 }
 </script>
+
+</body>
+</html>
