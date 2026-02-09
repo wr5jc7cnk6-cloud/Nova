@@ -1,72 +1,100 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tiktok2</title>
+  <meta charset="UTF-8">
+  <title>Nova Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-<style>
-body {
-  margin: 0;
-  background: black;
-  color: white;
-  font-family: sans-serif;
-  text-align: center;
-}
+    .box {
+      background: #1e293b;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
 
-/* 上の告知 */
-.notice {
-  padding: 10px;
-  font-size: 14px;
-  background: #111;
-}
+    button {
+      background: #4285F4;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
 
-/* 動画エリア */
-.video-area {
-  margin-top: 20px;
-}
+    button:hover {
+      opacity: 0.9;
+    }
 
-video {
-  width: 90%;
-  max-height: 70vh;
-  border-radius: 10px;
-}
-
-/* 下ナビ */
-.navbar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #111;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-  font-size: 14px;
-}
-</style>
+    #user {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #38bdf8;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="notice">
-この機能 Life 実装予定です
+<div class="box">
+  <h1>Nova</h1>
+  <p>ログインしてください</p>
+  <button onclick="login()">Googleでログイン</button>
+  <div id="user"></div>
 </div>
 
-<div class="video-area">
-<video controls autoplay loop>
-  <source src="snaptik_7197240045273615618_v3.mp4" type="video/mp4">
-  動画を再生できません
-</video>
-</div>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
-<div class="navbar">
-<div>ホーム</div>
-<div>LIVE</div>
-<div>投稿</div>
-<div>通知</div>
-<div>プロフィール</div>
-</div>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDllB-KfT1aAT8nWlcWAKsQCV6o6xpqwzA",
+    authDomain: "nova-a7c84.firebaseapp.com",
+    projectId: "nova-a7c84",
+    storageBucket: "nova-a7c84.firebasestorage.app",
+    messagingSenderId: "801132117991",
+    appId: "1:801132117991:web:f56f4b4497703b65dd0742",
+    measurementId: "G-GCN4KNVBYG"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  window.login = async function () {
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (err) {
+      alert("ログイン失敗: " + err.message);
+    }
+  };
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      document.getElementById("user").innerText =
+        "ログイン中: " + user.displayName;
+    } else {
+      document.getElementById("user").innerText = "";
+    }
+  });
+</script>
 
 </body>
 </html>
